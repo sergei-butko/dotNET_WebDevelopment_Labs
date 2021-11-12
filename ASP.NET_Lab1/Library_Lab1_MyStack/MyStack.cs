@@ -20,31 +20,40 @@ namespace Library_Lab1_MyStack
             var newNode = new StackNode<T>(elem) {Next = _head};
             _head = newNode;
             Size++;
+
             var args = new StackEventArgs(_head.Value.ToString());
             StackEventMethod(args);
-            //Notification?.Invoke($"\nElement {_head.Value} was added");
         }
 
         // Last element removal method
         public T Pop()
         {
-            if (IsEmpty) throw new InvalidOperationException("Stack is empty!");
+            if (IsEmpty)
+            {
+                throw new InvalidOperationException("Stack is empty!");
+            }
+
             var temp = _head;
             _head = _head.Next;
             Size--;
+
             var args = new StackEventArgs(temp.Value.ToString());
             StackEventMethod(args);
-            //Notification?.Invoke($"\nElement {temp.Value} was removed");
+
             return temp.Value;
         }
 
         // Last element showing method
         public T Peek()
         {
-            if (IsEmpty) throw new InvalidOperationException("Stack is empty!");
+            if (IsEmpty)
+            {
+                throw new InvalidOperationException("Stack is empty!");
+            }
+
             var args = new StackEventArgs(_head.Value.ToString());
             StackEventMethod(args);
-            //Notification?.Invoke($"\nElement {_head.Value} was viewed");
+
             return _head.Value;
         }
 
