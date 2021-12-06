@@ -12,7 +12,9 @@ namespace Program_Lab1
             
             //var stack = new MyStack<Student>();
             var stack = new MyStack<string>();
-            stack.StackEvent += OutputMessage;
+            stack.StackPushEvent += OutputMessage;
+            stack.StackPopEvent += OutputMessage;
+            stack.StackPeekEvent += OutputMessage;
             
             bool alive = true;
             while (alive)
@@ -87,7 +89,7 @@ namespace Program_Lab1
         private static void OutputMessage(object e, EventArgs args)
         {
             Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.WriteLine($"Stack type: {e.GetType()}. Element: {((StackEventArgs)args).Event}");
+            Console.WriteLine($"Event: {args}");
             Console.ForegroundColor = ConsoleColor.Gray;
         }
     }

@@ -2,13 +2,15 @@
 
 namespace Library_Lab1_MyStack
 {
-    public class StackEventArgs : EventArgs
+    public abstract class StackEventArgs : EventArgs
     {
-        public StackEventArgs(string args)
+        protected StackEventArgs(string args, Type type)
         {
             Event = args;
+            EventType = type;
         }
 
-        public string Event { get; }
+        private string Event { get; }
+        private Type EventType { get; }
     }
 }

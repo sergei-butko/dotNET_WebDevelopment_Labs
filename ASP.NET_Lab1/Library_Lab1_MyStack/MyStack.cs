@@ -7,7 +7,9 @@ namespace Library_Lab1_MyStack
 {
     public sealed class MyStack<T> : IEnumerable<T>
     {
-        public event EventHandler<StackEventArgs> StackEvent;
+        public event EventHandler<PushEvent> StackPushEvent;
+        public event EventHandler<PopEvent> StackPopEvent;
+        public event EventHandler<PeekEvent> StackPeekEvent;
 
         private StackNode<T> _head;
 
@@ -21,8 +23,8 @@ namespace Library_Lab1_MyStack
             _head = newNode;
             Size++;
 
-            var args = new StackEventArgs(_head.Value.ToString());
-            StackEventMethod(args);
+            var args = new PushEvent(_head.Value.ToString(), typeof(PushEvent));
+            OnStackPushEvent(args);
         }
 
         // Last element removal method
@@ -37,8 +39,8 @@ namespace Library_Lab1_MyStack
             _head = _head.Next;
             Size--;
 
-            var args = new StackEventArgs(temp.Value.ToString());
-            StackEventMethod(args);
+            var args = new PopEvent(temp.Value.ToString(), typeof(PopEvent));
+            OnStackPopEvent(args);
 
             return temp.Value;
         }
@@ -51,15 +53,27 @@ namespace Library_Lab1_MyStack
                 throw new InvalidOperationException("Stack is empty!");
             }
 
-            var args = new StackEventArgs(_head.Value.ToString());
-            StackEventMethod(args);
+            var args = new PeekEvent(_head.Value.ToString(), typeof(PeekEvent));
+            OnStackPeekEvent(args);
 
             return _head.Value;
         }
 
-        private void StackEventMethod(StackEventArgs e)
+        private void OnStackPushEvent(PushEvent e)
         {
-            var temp = Volatile.Read(ref StackEvent);
+            var temp = Volatile.Read(ref StackPushEvent);
+            temp?.Invoke(this, e);
+        }
+
+        private void OnStackPopEvent(PopEvent e)
+        {
+            var temp = Volatile.Read(ref StackPopEvent);
+            temp?.Invoke(this, e);
+        }
+        
+        private void OnStackPeekEvent(PeekEvent e)
+        {
+            var temp = Volatile.Read(ref StackPeekEvent);
             temp?.Invoke(this, e);
         }
 
