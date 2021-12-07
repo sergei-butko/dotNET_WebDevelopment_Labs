@@ -2,6 +2,7 @@
 using Restaurant.BLL.Services.Interfaces;
 using Restaurant.PL.ViewModels;
 using AutoMapper;
+using Restaurant.DAL.Models;
 
 namespace Restaurant.PL.Controllers
 {
@@ -22,6 +23,18 @@ namespace Restaurant.PL.Controllers
         public OrderViewModel GetOrderDetails(int orderId)
         {
             return _mapper.Map<OrderViewModel>(_orderService.GetOrderDetails(orderId));
+        }
+
+        [HttpPost]
+        public IActionResult MakeOrder(OrderViewModel order)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            _orderService.MakeNewOrder(_mapper.Map<Order>(order));
+            return Ok(order);
+
         }
     }
 }

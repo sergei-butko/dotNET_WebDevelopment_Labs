@@ -1,4 +1,5 @@
-﻿using Restaurant.DAL.Models;
+﻿using Restaurant.BLL.DTOs;
+using Restaurant.DAL.Models;
 using Restaurant.PL.ViewModels;
 using AutoMapper;
 
@@ -8,11 +9,11 @@ namespace Restaurant.PL
     {
         public MappingProfile()
         {
-            CreateMap<Meal, MealViewModel>();
             CreateMap<Order, OrderViewModel>();
+            CreateMap<Meal, MealViewModel>();
+            CreateMap<PortionDto, PortionViewModel>();
 
-            // CreateMap<Album, AlbumViewModel>()
-            //     .ForMember(dest => dest.ArtistName, opt => opt.MapFrom(src => src.Artist.Name));
+            CreateMap<OrderViewModel, Order>();
         }
     }
 }
