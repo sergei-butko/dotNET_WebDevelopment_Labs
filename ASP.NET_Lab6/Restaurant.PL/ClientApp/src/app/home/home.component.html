@@ -1,0 +1,17 @@
+<div class="d-flex justify-content-end">
+  <button type="button" class="btn btn-primary border-0" [routerLink]="['make-order']">Make order</button>
+</div>
+
+<h1 class="pl-3">Menu</h1>
+
+<app-loading *ngIf="!meals"></app-loading>
+
+<div class="container">
+  <div class="row">
+    <a id="artist" class="cols-md-3 card m-3 px-3 pt-3 pb-0"
+       *ngFor="let meal of meals" [routerLink]="['meal', meal.id]">
+      <h5>{{ meal.name }}</h5>
+      <p>Price: {{ meal.pricePer100g }}</p>
+    </a>
+  </div>
+</div>
