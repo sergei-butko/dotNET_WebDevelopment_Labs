@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Restaurant.BLL.Repositories.Interfaces;
+﻿using Restaurant.BLL.Repositories.Interfaces;
 using Restaurant.BLL.Services.Interfaces;
 using Restaurant.DAL.Models;
 

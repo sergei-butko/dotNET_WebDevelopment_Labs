@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Restaurant.BLL.Repositories.Interfaces
+﻿namespace Restaurant.BLL.Repositories.Interfaces
 {
     public interface IGenericRepository<T> where T : class
     {

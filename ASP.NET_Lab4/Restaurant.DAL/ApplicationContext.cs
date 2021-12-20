@@ -15,6 +15,5 @@ namespace Restaurant.DAL
         public DbSet<IngredientForMeal> IngredientsForMeals { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<MealForOrder> MealsForOrders { get; set; }
-        public DbSet<PriceList> PriceLists { get; set; }
     }
 }
