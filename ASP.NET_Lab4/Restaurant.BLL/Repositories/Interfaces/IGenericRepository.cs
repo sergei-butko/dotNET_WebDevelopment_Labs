@@ -1,12 +1,12 @@
-﻿namespace Restaurant.BLL.Repositories.Interfaces
+﻿namespace Restaurant.BLL.Repositories.Interfaces;
+
+public interface IGenericRepository<TEntity, TKey> where TEntity : class
 {
-    public interface IGenericRepository<T> where T : class
-    {
-        T GetById(int id);
-        IEnumerable<T> GetAll();
-        void Create(T entity);
-        void CreateRange(IEnumerable<T> entities);
-        void Update(T entity);
-        void Delete(T entity);
-    }
+    Task<TEntity> GetById(TKey id);
+    IEnumerable<TEntity> GetAll();
+    void Create(TEntity entity);
+    void CreateRange(IEnumerable<TEntity> entities);
+    void Update(TEntity entity);
+    void Delete(TEntity entity);
+    void Save();
 }

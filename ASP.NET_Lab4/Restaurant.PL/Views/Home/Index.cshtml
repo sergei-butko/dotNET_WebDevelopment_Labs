@@ -1,8 +1,25 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Main menu";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<h1>Choose what to do:</h1>
+<div>
+    <div class="btn-group-vertical">
+        <button class="btn btn-info menu_btn my-3"
+                onclick="location.href='@Url.Action("ShowMenu", "Meal")'">
+            Show menu
+        </button>
+        <button class="btn btn-info menu_btn my-3"
+                onclick="location.href='@Url.Action("AddMeal", "Meal")'">
+            Add own meal
+        </button>
+        <button class="btn btn-info menu_btn my-3"
+                onclick="location.href='@Url.Action("MakeOrder", "Order")'">
+            Make order
+        </button>
+        <button class="btn btn-info menu_btn my-3"
+                onclick="location.href='@Url.Action("GetAllOrders", "Order")'">
+            Get orders list
+        </button>
+    </div>
 </div>

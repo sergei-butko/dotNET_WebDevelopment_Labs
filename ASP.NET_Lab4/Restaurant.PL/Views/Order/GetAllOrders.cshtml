@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Restaurant.PL.ViewModels.OrderViewModel> 
+
+@{
+    ViewBag.Title = "Orders";
+}
+
+<h3>Restaurant orders list:</h3>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Total Sum</th>
+            <th>Order Time</th>
+            <th>Active</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @{
+            foreach (var order in Model)
+            {
+                <tr>
+                    <td>@order.Id</td>
+                    <td>@order.Title</td>
+                    <td>@order.TotalSum</td>
+                    <td>@order.OrderTime</td>
+                    <td>
+                        @{
+                            if (order.IsActive == 1)
+                            {
+                                <p>True</p>
+                            }
+                            else
+                            {
+                                <p>False</p>
+                            }
+                        }
+                    </td>
+                    <td>
+                        <div class="btn-group-vertical">
+                            <button class="btn btn-info" onclick=
+                                    "location.href='@Url.Action("GetOrderMeals", "Order", new {orderId = order.Id})'">
+                                Details
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+</div>

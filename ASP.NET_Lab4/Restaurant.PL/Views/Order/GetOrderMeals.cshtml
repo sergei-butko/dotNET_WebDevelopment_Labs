@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Restaurant.PL.ViewModels.MealViewModel>
+
+@{
+    ViewData["Title"] = "Order Details";
+}
+
+@using (Html.BeginForm("GetOrderMeals", "Order", FormMethod.Get))
+{
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            @{
+                foreach (var meal in Model)
+                {
+                    <tr>
+                        <td>@meal.Id</td>
+                        <td>@meal.Name</td>
+                        <td>@meal.Price</td>
+                    </tr>
+                }
+            }
+            </tbody>
+        </table>
+    </div>
+}

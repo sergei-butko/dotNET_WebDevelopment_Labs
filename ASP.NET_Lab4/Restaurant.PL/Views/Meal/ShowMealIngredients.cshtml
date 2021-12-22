@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Restaurant.PL.ViewModels.IngredientViewModel> 
+
+@{
+    ViewBag.Title = "Meal Details";
+}
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Price per Unit</th>
+        </tr>
+        </thead>
+        <tbody>
+        @{
+            foreach (var ingredient in Model)
+            {
+                <tr>
+                    <td>@ingredient.Id</td>
+                    <td>@ingredient.Name</td>
+                    <td>@ingredient.PricePerUnit</td>
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+</div>

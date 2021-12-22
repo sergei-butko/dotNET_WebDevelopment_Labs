@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Restaurant.PL.ViewModels.IngredientViewModel> 
+
+@{
+    ViewBag.Title = "Make meal";
+}
+
+@using (Html.BeginForm("NewMeal", "Meal", FormMethod.Post))
+{
+    <div class="form-group">
+        <label class="h2">Name:</label>
+        <input type="text" class="form-control" name="mealName" placeholder="Enter meal name...">
+    </div>
+    <h4 class="mt-4">Choose ingredients:</h4>
+    <div class="d-flex flex-column">
+        @{
+            foreach (var ingredient in Model)
+            {
+                var id = ingredient.Id;
+                <div class="align-content-center">
+                    <label>
+                        <input type="checkbox" name="ingredientsToAddId" value="@id" class="px-2">
+                        @ingredient.Name
+                    </label>
+                </div>
+            }
+
+        }
+    </div>
+
+    <button class="mt-3 btn btn-success">
+        <input type="submit" name="NewMeal" value="Create" class="btn btn-success">
+    </button>
+}

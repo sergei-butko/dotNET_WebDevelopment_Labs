@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Restaurant.PL.ViewModels.MealViewModel> 
+
+@{
+    ViewBag.Title = "Menu";
+}
+
+<h3>Restaurant meal menu:</h3>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @{
+            foreach (var meal in Model)
+            {
+                <tr>
+                    <td>@meal.Id</td>
+                    <td>@meal.Name</td>
+                    <td>@meal.Price</td>
+                    <td>
+                        <div class="btn-group-vertical">
+                            <button class="btn btn-info" onclick="
+                                        location.href='@Url.Action("ShowMealIngredients", "Meal", new {mealId = meal.Id})'">Details</button>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+</div>

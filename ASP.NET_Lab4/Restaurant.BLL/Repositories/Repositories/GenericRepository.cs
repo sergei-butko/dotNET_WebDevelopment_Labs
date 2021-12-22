@@ -2,51 +2,51 @@
 using Restaurant.BLL.Repositories.Interfaces;
 using Restaurant.DAL;
 
-namespace Restaurant.BLL.Repositories.Repositories
+namespace Restaurant.BLL.Repositories.Repositories;
+
+public class GenericRepository<TEntity, TKey> : IGenericRepository<TEntity, TKey> where TEntity : class
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : class
+    private readonly ApplicationContext _db;
+    private readonly DbSet<TEntity> _entity;
+
+    public GenericRepository(ApplicationContext context)
     {
-        private readonly ApplicationContext _db;
-        private readonly DbSet<T> _entity;
+        _db = context;
+        _entity = context.Set<TEntity>();
+    }
 
-        public GenericRepository(ApplicationContext context)
-        {
-            _db = context;
-            _entity = context.Set<T>();
-        }
+    public async Task<TEntity> GetById(TKey id)
+    {
+        return await _entity.FindAsync(id) ?? throw new ArgumentException("Incorrect ID!");
+    }
 
-        public T GetById(int id)
-        {
-            return _entity.Find(id);
-        }
+    public IEnumerable<TEntity> GetAll()
+    {
+        return _entity;
+    }
 
-        public IEnumerable<T> GetAll()
-        {
-            return _entity.ToArray();
-        }
+    public async void Create(TEntity entity)
+    {
+        await _entity.AddAsync(entity);
+    }
 
-        public void Create(T entity)
-        {
-            _entity.Add(entity);
-            _db.SaveChanges();
-        }
+    public async void CreateRange(IEnumerable<TEntity> entities)
+    {
+        await _entity.AddRangeAsync(entities);
+    }
 
-        public void CreateRange(IEnumerable<T> entities)
-        {
-            _entity.AddRange(entities);
-            _db.SaveChanges();
-        }
+    public void Update(TEntity entity)
+    {
+        _entity.Update(entity);
+    }
 
-        public void Update(T entity)
-        {
-            _entity.Update(entity);
-            _db.SaveChanges();
-        }
+    public void Delete(TEntity entity)
+    {
+        _entity.Remove(entity);
+    }
 
-        public void Delete(T entity)
-        {
-            _entity.Remove(entity);
-            _db.SaveChanges();
-        }
+    public void Save()
+    {
+        _db.SaveChanges();
     }
 }
