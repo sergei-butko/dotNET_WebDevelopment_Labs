@@ -61,7 +61,7 @@ public class OrderService : IOrderService
         _orderRepository.Save();
 
 
-        var order = _orderRepository.GetAll().FirstOrDefault(o => o.Title == orderTitle);
+        var order = _orderRepository.GetAll().AsQueryable().FirstOrDefault(o => o.Title == orderTitle);
         foreach (var meal in meals)
         {
             _mealForOrderRepository.Create(new MealForOrder
