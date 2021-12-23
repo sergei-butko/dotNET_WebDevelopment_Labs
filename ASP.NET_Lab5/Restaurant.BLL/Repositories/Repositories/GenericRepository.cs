@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Restaurant.BLL.Repositories.Interfaces;
 using Restaurant.DAL;
 
@@ -17,24 +15,24 @@ public class GenericRepository<TEntity, TKey> : IGenericRepository<TEntity, TKey
         _entity = context.Set<TEntity>();
     }
 
-    public TEntity GetById(TKey id)
+    public async Task<TEntity> GetById(TKey id)
     {
-        return _entity.Find(id);
+        return await _entity.FindAsync(id) ?? throw new ArgumentException("Incorrect ID!");
     }
 
     public IEnumerable<TEntity> GetAll()
     {
-        return _entity.ToArray();
+        return _entity;
     }
 
-    public void Create(TEntity entity)
+    public async void Create(TEntity entity)
     {
-        _entity.Add(entity);
+        await _entity.AddAsync(entity);
     }
 
-    public void CreateRange(IEnumerable<TEntity> entities)
+    public async void CreateRange(IEnumerable<TEntity> entities)
     {
-        _entity.AddRange(entities);
+        await _entity.AddRangeAsync(entities);
     }
 
     public void Update(TEntity entity)

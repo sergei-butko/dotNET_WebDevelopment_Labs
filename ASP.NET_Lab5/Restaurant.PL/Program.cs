@@ -20,7 +20,7 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "ASP.NET_Lab5", 
+        Title = "ASP.NET_Lab5",
         Version = "v1"
     });
 });

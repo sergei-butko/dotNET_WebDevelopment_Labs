@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-
-namespace Restaurant.BLL.Repositories.Interfaces;
+﻿namespace Restaurant.BLL.Repositories.Interfaces;
 
 public interface IGenericRepository<TEntity, TKey> where TEntity : class
 {
-    TEntity GetById(TKey id);
+    Task<TEntity> GetById(TKey id);
     IEnumerable<TEntity> GetAll();
     void Create(TEntity entity);
     void CreateRange(IEnumerable<TEntity> entities);

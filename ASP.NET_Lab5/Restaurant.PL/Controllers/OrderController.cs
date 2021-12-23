@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Net;
+using Microsoft.AspNetCore.Mvc;
 using Restaurant.BLL.Services.Interfaces;
 using Restaurant.DAL.Models;
+using Restaurant.PL.ResponseModels;
 using Restaurant.PL.ViewModels;
 using AutoMapper;
 
@@ -19,21 +21,33 @@ public class OrderController : ControllerBase
         _orderService = orderService;
     }
 
-    [HttpGet("order_details/{orderId}")]
-    public OrderViewModel GetOrderDetails(int orderId)
+    [HttpGet("orders_history")]
+    public IEnumerable<OrderViewModel> ShowMenu()
     {
-        return _mapper.Map<OrderViewModel>(_orderService.GetOrderDetails(orderId));
+        var orders = _orderService.GetAllOrders();
+        var ordersHistory = _mapper.Map<IEnumerable<OrderViewModel>>(orders);
+        return ordersHistory;
     }
 
-    [HttpPost]
-    public IActionResult MakeOrder(OrderViewModel order)
+    [HttpGet("order_meals/{orderId}")]
+    public IEnumerable<MealViewModel> GetOrderMeals(int orderId)
+    {
+        var orderMeals = _orderService.GetOrderMeals(orderId);
+        var meals = _mapper.Map<IEnumerable<MealViewModel>>(orderMeals);
+        return meals;
+    }
+
+    [HttpPost("make_order")]
+    public HttpResponseMessage MakeOrder([FromBody] MakeOrderResponse response)
     {
         if (!ModelState.IsValid)
         {
-            return BadRequest(ModelState);
+            return new HttpResponseMessage(HttpStatusCode.BadRequest);
         }
 
-        _orderService.MakeNewOrder(_mapper.Map<Order>(order));
-        return Ok(order);
+        var meals = _mapper.Map<IEnumerable<Meal>>(response.Meals);
+        _orderService.MakeNewOrder(response.Order, meals);
+
+        return new HttpResponseMessage(HttpStatusCode.Created);
     }
 }

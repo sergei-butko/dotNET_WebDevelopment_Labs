@@ -8,9 +8,12 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<Order, OrderViewModel>();
+        CreateMap<Ingredient, IngredientViewModel>();
         CreateMap<Meal, MealViewModel>();
+        CreateMap<Order, OrderViewModel>();
 
+        CreateMap<IngredientViewModel, Ingredient>();
+        CreateMap<MealViewModel, Meal>();
         CreateMap<OrderViewModel, Order>();
     }
 }
