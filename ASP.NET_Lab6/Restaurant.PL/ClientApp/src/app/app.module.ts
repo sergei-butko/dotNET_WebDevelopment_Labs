@@ -9,9 +9,10 @@ import {NavMenuComponent} from './nav-menu/nav-menu.component';
 import {DataService} from "./data.service";
 import {HomeComponent} from './home/home.component';
 import {MealComponent} from "./meal/meal.component";
+import {NewMealComponent} from "./new-meal/new-meal.component";
+import {OrdersHistoryComponent} from "./orders-history/orders-history.component";
 import {OrderComponent} from "./order/order.component";
 import {MakeOrderComponent} from "./make-order/make-order.component";
-import {ShoppingCartComponent} from "./shopping-cart/shopping-cart.component";
 import {LoadingComponent} from "./loading/loading.component";
 
 @NgModule({
@@ -20,9 +21,10 @@ import {LoadingComponent} from "./loading/loading.component";
     NavMenuComponent,
     HomeComponent,
     MealComponent,
+    NewMealComponent,
+    OrdersHistoryComponent,
     OrderComponent,
     MakeOrderComponent,
-    ShoppingCartComponent,
     LoadingComponent,
   ],
   imports: [
@@ -32,9 +34,10 @@ import {LoadingComponent} from "./loading/loading.component";
     RouterModule.forRoot([
       {path: '', component: HomeComponent, pathMatch: 'full'},
       {path: 'meal/:id', component: MealComponent},
+      {path: 'new-meal', component: NewMealComponent},
+      {path: 'orders-history', component: OrdersHistoryComponent},
       {path: 'order/:id', component: OrderComponent},
       {path: 'make-order', component: MakeOrderComponent},
-      {path: 'shopping-cart', component: ShoppingCartComponent}
     ])
   ],
   providers: [DataService],

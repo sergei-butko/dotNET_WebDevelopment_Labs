@@ -1,11 +1,15 @@
-﻿using Restaurant.DAL.Models;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Restaurant.DAL.Models;
 
 namespace Restaurant.BLL.Services.Interfaces
 {
     public interface IOrderService
     {
-        Order GetOrderDetails(int orderId);
-        void MakeNewOrder(Order order);
+        IEnumerable<Order> GetAllOrders();
+        Task<Order> GetOrderDetails(int orderId);
+        IEnumerable<Meal> GetOrderMeals(int orderId);
+        void MakeNewOrder(string orderTitle, IEnumerable<Meal> mealsToAdd);
         void ChangeOrderDetails(Order order);
         void CancelOrder(Order order);
         void ResolveOrder(int orderId);

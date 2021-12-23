@@ -1,8 +1,12 @@
 ﻿using System.Collections.Generic;
-using AutoMapper;
+using System.Net;
+using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
 using Restaurant.BLL.Services.Interfaces;
+using Restaurant.DAL.Models;
+using Restaurant.PL.ResponseModels;
 using Restaurant.PL.ViewModels;
+using AutoMapper;
 
 namespace Restaurant.PL.Controllers
 {
@@ -19,22 +23,34 @@ namespace Restaurant.PL.Controllers
             _mealService = mealService;
         }
 
-        [HttpGet("get_meals")]
-        public IEnumerable<MealViewModel> GetAllMeals()
+        [HttpGet("show_menu")]
+        public IEnumerable<MealViewModel> ShowMenu()
         {
-            return _mapper.Map<IEnumerable<MealViewModel>>(_mealService.GetAllMeals());
-        }
-        
-        [HttpGet("meal_portions/{mealId}")]
-        public IEnumerable<PortionViewModel> GetMealPortions(int mealId)
-        {
-            return _mapper.Map<IEnumerable<PortionViewModel>>(_mealService.GetMealPortions(mealId));
+            var meals = _mealService.GetAllMeals();
+            var menu = _mapper.Map<IEnumerable<MealViewModel>>(meals);
+            return menu;
         }
 
-        [HttpGet("meal_details/{mealId}")]
-        public MealViewModel GetOrderDetails(int mealId)
+        [HttpGet("meal_ingredients/{mealId}")]
+        public IEnumerable<IngredientViewModel> ShowMealIngredients(int mealId)
         {
-            return _mapper.Map<MealViewModel>(_mealService.GetMealDetails(mealId));
+            var mealIngredients = _mealService.GetMealIngredients(mealId);
+            var ingredients = _mapper.Map<IEnumerable<IngredientViewModel>>(mealIngredients);
+            return ingredients;
+        }
+
+        [HttpPost("new_meal")]
+        public HttpResponseMessage NewMeal([FromBody]NewMealResponse response)
+        {
+            if (!ModelState.IsValid)
+            {
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+            }
+            
+            var ingredients = _mapper.Map<IEnumerable<Ingredient>>(response.IngredientsToAdd);
+            _mealService.AddNewMeal(response.MealName, ingredients);
+            
+            return new HttpResponseMessage(HttpStatusCode.Created);
         }
     }
 }

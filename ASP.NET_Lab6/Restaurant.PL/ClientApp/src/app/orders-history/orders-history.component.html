@@ -1,0 +1,31 @@
+<app-loading *ngIf="!orders"></app-loading>
+
+<h3>Restaurant orders list:</h3>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Id</th>
+      <th>Title</th>
+      <th>Total Sum</th>
+      <th>Order Time</th>
+      <th>Active</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let order of orders">
+      <td>{{ order.id }}</td>
+      <td>{{ order.title }}</td>
+      <td>{{ order.totalSum }}</td>
+      <td>{{ order.orderTime }}</td>
+      <td>{{ order.isActive == 1 ? 'True' : 'False' }}</td>
+      <td>
+        <div class="btn-group-vertical">
+          <button class="btn btn-info" [routerLink]="['/order', order.id]">Details</button>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

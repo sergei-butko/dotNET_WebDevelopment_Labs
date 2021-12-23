@@ -1,0 +1,22 @@
+<h3 class="mb-4">Meal creation</h3>
+
+<div class="form-group">
+  <label class="h2">Name:</label>
+  <input type="text" class="form-control" name="mealName" placeholder="Enter meal name..." required
+         minlength="5" maxlength="50" size="50" [(ngModel)]="mealName">
+</div>
+
+<h4 class="mt-4">Choose ingredients:</h4>
+<div class="d-flex flex-column" *ngFor="let ingredient of ingredients">
+  <div class="align-content-center">
+    <label>
+      <input type="checkbox" class="px-2" (change)="addIngredientForMeal(ingredient)">
+      {{ingredient.name}}
+    </label>
+  </div>
+</div>
+
+<div class="btn btn-info"
+     (click)="addMeal()">
+  Make order
+</div>

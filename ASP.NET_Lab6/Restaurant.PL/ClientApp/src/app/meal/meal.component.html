@@ -1,0 +1,22 @@
+<h3>Meal #{{id}} ingredients</h3>
+
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Price per Unit</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let ingredient of ingredients">
+      <td>{{ingredient.id}}</td>
+      <td>{{ingredient.name}}</td>
+      <td>{{ingredient.pricePerUnit}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<app-loading *ngIf="!ingredients"></app-loading>

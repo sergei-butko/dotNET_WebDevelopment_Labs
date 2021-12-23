@@ -3,8 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Order} from "./order/order";
 import {Meal} from "./meal/meal";
-import {Portion} from "./meal/portion";
-
+import {Ingredient} from "./meal/ingredient";
 
 @Injectable()
 export class DataService {
@@ -13,29 +12,57 @@ export class DataService {
   }
 
   /* --- GET --- */
-  getAllMeals(): Observable<Meal[]> {
-    return this.http.get<Meal[]>('/meal/get_meals');
+  showMenu(): Observable<Meal[]> {
+    return this.http.get<Meal[]>('/meal/show_menu');
   }
 
-  getMealPortions(mealId: number): Observable<Portion[]> {
-    return this.http.get<Portion[]>('/meal/meal_portions/' + mealId);
+  getMealIngredients(mealId: number): Observable<Ingredient[]> {
+    return this.http.get<Ingredient[]>('/meal/meal_ingredients/' + mealId);
   }
 
-  getMealDetails(mealId: number): Observable<Meal> {
-    return this.http.get<Meal>('/meal/meal_details/' + mealId);
+  getAllIngredients(): Observable<Ingredient[]> {
+    return this.http.get<Ingredient[]>('/ingredient/show_all_ingredients');
   }
 
-  getOrderDetails(orderId: number): Observable<Order> {
-    return this.http.get<Order>('/order/order_details/' + orderId);
+  getOrdersHistory(): Observable<Order[]> {
+    return this.http.get<Order[]>('/order/orders_history');
   }
 
-  getAllPortions(): Observable<Portion[]> {
-    return this.http.get<Portion[]>('/portion/get_portions');
+  getOrderMeals(orderId: number): Observable<Meal[]> {
+    return this.http.get<Meal[]>('/order/order_meals/' + orderId);
   }
 
   /* --- POST --- */
-  addNewOrder(order: Order): void {
-    this.http.post('/order/make_order/', order);
+  addNewMeal(mealName: string, ingredientsToAdd: Ingredient[]) {
+    let body = {
+      meal: mealName,
+      ingredients: ingredientsToAdd
+    }
+    this.http.post('/meal/new_meal', body)
+      .subscribe({
+        next: data => {
+          console.log(data)
+        },
+        error: error => {
+          console.error('There was an error!', error);
+        }
+      });
   }
 
+  makeOrder(orderTitle: string, mealsToAdd: Meal[]) {
+    let body = {
+      order: orderTitle,
+      meals: mealsToAdd
+    }
+
+    return this.http.post('/order/make_order', body)
+      .subscribe({
+        next: data => {
+          console.log(data)
+        },
+        error: error => {
+          console.error('There was an error!', error);
+        }
+      });
+  }
 }

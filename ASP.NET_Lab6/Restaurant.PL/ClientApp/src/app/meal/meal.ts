@@ -1,5 +1,5 @@
 export class Meal {
-  id: number;
-  name: string;
-  pricePer100g: number;
+  id!: number;
+  name!: string;
+  price!: number;
 }

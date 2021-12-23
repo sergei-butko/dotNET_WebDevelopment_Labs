@@ -1,8 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {DataService} from "../data.service";
-import {Order} from "../order/order";
-import {Portion} from "../meal/portion";
-import {ShoppingCartComponent} from "../shopping-cart/shopping-cart.component";
+import {Meal} from "../meal/meal";
 
 @Component({
   selector: 'app-make-order',
@@ -10,39 +8,20 @@ import {ShoppingCartComponent} from "../shopping-cart/shopping-cart.component";
 })
 
 export class MakeOrderComponent {
-
-  order: Order
   orderTitle: string;
-  portions: Portion[];
-  shoppingCart: Portion[] = [];
+  meals: Meal[] = [];
+  mealsForOrder: Meal[] = [];
 
   constructor(private dataService: DataService) {
-    dataService.getAllPortions().subscribe(data => this.portions = data);
+    dataService.showMenu().subscribe(data => this.meals = data);
   }
 
-  addToCart(portion: Portion): void {
-    this.shoppingCart.push(portion);
+  addMealForOrder(meal: Meal): void {
+    this.mealsForOrder.push(meal);
   }
 
-  makeOrder(shoppingCart: Portion[], orderTitle: string) {
-    let totalSum = 0;
-    for (let i = 0; i < shoppingCart.length; i++) {
-      totalSum += shoppingCart[i].totalSum;
-    }
-
-    let order: Order = {
-      title: orderTitle,
-      totalSum: totalSum,
-      orderTime: new Date(),
-      isActive: 1
-    };
-
-    this.dataService.addNewOrder(order);
-    //ShoppingCartComponent.makeOrder(shoppingCart, orderTitle);
+  makeOrder() {
+    this.dataService.makeOrder(this.orderTitle, this.mealsForOrder);
+    window.location.href = "/";
   }
-
-  makeMeal(){
-
-  }
-
 }

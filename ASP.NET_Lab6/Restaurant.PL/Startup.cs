@@ -33,9 +33,9 @@ namespace Restaurant.PL
 
             services.AddAutoMapper(Assembly.GetAssembly(typeof(MappingProfile)));
 
-            services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddTransient(typeof(IGenericRepository<,>), typeof(GenericRepository<,>));
+            services.AddTransient<IIngredientService, IngredientService>();
             services.AddTransient<IMealService, MealService>();
-            services.AddTransient<IPortionService, PortionService>();
             services.AddTransient<IOrderService, OrderService>();
         }
 

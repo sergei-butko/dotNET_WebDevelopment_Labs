@@ -7,9 +7,9 @@ import {Meal} from "../meal/meal";
   templateUrl: './home.component.html',
 })
 export class HomeComponent {
-  meals: Meal[];
+  meals!: Meal[];
 
   constructor(private dataService: DataService) {
-    dataService.getAllMeals().subscribe(data => this.meals = data);
+    dataService.showMenu().subscribe(data => this.meals = data);
   }
 }
