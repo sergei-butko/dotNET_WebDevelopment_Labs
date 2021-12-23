@@ -47,8 +47,8 @@ namespace Restaurant.PL.Controllers
                 return new HttpResponseMessage(HttpStatusCode.BadRequest);
             }
             
-            var ingredients = _mapper.Map<IEnumerable<Ingredient>>(response.IngredientsToAdd);
-            _mealService.AddNewMeal(response.MealName, ingredients);
+            var ingredients = _mapper.Map<IEnumerable<Ingredient>>(response.Ingredients);
+            _mealService.AddNewMeal(response.Meal, ingredients);
             
             return new HttpResponseMessage(HttpStatusCode.Created);
         }
